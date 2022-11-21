@@ -8,7 +8,7 @@ class Database:
                                               database='companycorp',
                                               password='',
                                               host='localhost')
-            print('Database Connected')
+            print('[SERVER] Database Connected')
         except mariadb.Error as error_message:
             print(f'DB Error: {error_message}')
 
@@ -19,7 +19,7 @@ class Database:
             self.connection.commit()
             cursor.close()
         except mariadb.Error as error_message:
-            print(f'Database Error: {error_message}')
+            print(f'[SERVER] Database Error: {error_message}')
 
     def __execute_params(self, statement, params):
         try:
@@ -28,7 +28,7 @@ class Database:
             self.connection.commit()
             cursor.close()
         except mariadb.Error as error_message:
-            print(f'Database Error: {error_message}')
+            print(f'[SERVER] Database Error: {error_message}')
 
     def __get_execute(self, statement):
         try:
@@ -39,7 +39,7 @@ class Database:
             return saved
 
         except mariadb.Error as error_message:
-            print(f'Database Error: {error_message}')
+            print(f'[SERVER] Database Error: {error_message}')
             return
 
     def __get_users(self):
@@ -65,14 +65,19 @@ class Database:
 
 
     def add_company_money(self, company_id, amount):
-        current = self.__get_execute(f'SELECT balance FROM companies WHERE id = {company_id}')
-        current = str(current).replace(',', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '')
-        print(f'CURRENT: {current}')
+        current = self.__get_execute(f'SELECT * FROM companies WHERE id = {company_id}')
+        current = current[0][1]
         total = int(current) + int(amount)
         self.__execute(f'UPDATE companies set balance = {total} WHERE id = {company_id}')
 
+    def remove_company_money(self, company_id, amount):
+        current = self.__get_execute(f'SELECT * FROM companies WHERE id = {company_id}')
+        current = current[0][2]
+        total = int(current) - int(amount)
+        self.__execute(f'UPDATE companies set balance = {total} WHERE id = {company_id}')
+
     def get_company_balance(self, company_id):
-        return self.__get_execute(f'SELECT balance FROM companies WHERE id = {company_id}')
+        return self.__get_execute(f'SELECT * FROM companies WHERE id = {company_id}')[0][2]
 
     # TODO: v
     def get_user_by_id(self):

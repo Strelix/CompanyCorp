@@ -66,5 +66,8 @@ class Company:
     def add_money(self, amount):
         self.DB.add_company_money(self.login.users_company_id, amount)
 
+    def remove_money(self, amount):
+        self.DB.remove_company_money(self.login.users_company_id, amount)
+
     def get_balance(self):
         return self.DB.get_company_balance(self.login.users_company_id)

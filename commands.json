@@ -1,0 +1,13 @@
+[
+  {
+    "command": "help",
+    "type": "display",
+    "action": "help",
+    "description": "Displays this screen!"
+  },  {
+    "command": "commands",
+    "type": "display",
+    "action": "commands",
+    "description": "Displays all of your available commands!"
+  }
+]

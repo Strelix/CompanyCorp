@@ -1,20 +1,36 @@
 from Classes.Login import Login
 from Classes.Companies import Company
 from Classes.DB import Database
+from Classes.Files import Files
+
+FILES = Files()
+commands = FILES.read_file('commands.json')[0]
+prefix = '!'
 
 DB = Database()
 LOGIN = Login(DB)
 COMPANIES = Company(DB, LOGIN)
 
-print(LOGIN.login('Trey', '1234'))
+for ind, item in enumerate(commands):
+    print(f'Ind: {ind}, {item}, {[*commands.values()][ind]}')
+
+exit = False
+joined = False
+while not exit:
+    try:
+        if not joined:
+            print('Welcome to the game! Use !help to get started. \n')
+            joined = True
+
+        command = str(input('  >  '))
 
 
+        if command.replace(prefix, '') in commands:
+            print('in')
 
-# if LOGIN.logged_in and LOGIN.users_company_id == None:
-#     COMPANIES.create('Comp')
+    except:
+        pass
 
-# print(COMPANIES.get_company())
-
-print(COMPANIES.get_balance())
-print(COMPANIES.add_money(100))
-print(COMPANIES.get_balance())
+# LOGIN.login('Trey', '1234')
+#
+# COMPANIES.remove_money(1)
