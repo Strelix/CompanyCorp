@@ -69,12 +69,17 @@ class Login:
             if info[4]:
                 self.users_company_id = info[4]
 
-
+            return True, f'Successfully logged in!'
         else:
-            print('Login incorrect')
+            return False, 'Login incorrect, please try again.'
 
     def logout(self):
-        print(' logout ')
+        self.logged_in = False
+        self.username = None
+        self.user_id = None
+        self.admin = False
+        self.users_company_id = None
+        print('You\'re now logged out!')
 
 
     def signUp(self, username, pin):

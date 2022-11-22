@@ -1,8 +1,15 @@
+import json
 class Company:
     def __init__(self, database, login):
         self.DB = database
 
         self.login = login
+
+        self.login.users_company_id = None  # sets id
+        self.company_name = None
+        self.balance = None
+        self.company_id = None
+        self.staff = []
 
     def __validate_name(self, name):
         for letter in name:
@@ -40,10 +47,15 @@ class Company:
 
             for company in companies:
                 if company[4] == self.login.user_id:
+
                     self.login.users_company_id = company[0] # sets id
                     self.company_name = company[1]
                     self.balance = company[2]
                     self.company_id = company[0]
+
+                    # for member in company[3]:
+                    #
+
                     self.DB.add_company_to_user(self.company_id, self.login.user_id)
 
     def set_company_info(self, comp_id):
@@ -52,6 +64,9 @@ class Company:
             if item[0] == comp_id:
                 self.company_name = item[1]
                 self.balance = item[2]
+                self.company_id = item[0]
+                self.staff = json.loads(item[3])[0]
+                print(f'Staff: {self.staff}')
 
         self.company_id = comp_id
 
@@ -71,3 +86,6 @@ class Company:
 
     def get_balance(self):
         return self.DB.get_company_balance(self.login.users_company_id)
+
+    # def hire_staff(self, type):
+

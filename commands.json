@@ -4,10 +4,23 @@
     "type": "display",
     "action": "help",
     "description": "Displays this screen!"
-  },  {
+  },
+  {
     "command": "commands",
     "type": "display",
     "action": "commands",
     "description": "Displays all of your available commands!"
+  },
+  {
+    "command": "login",
+    "type": "login",
+    "action": "",
+    "description": "Login to your account, to save / load your data!"
+  },
+  {
+    "command": "balance",
+    "type": "balance",
+    "action": "",
+    "description": "View the balance of your company!"
   }
 ]

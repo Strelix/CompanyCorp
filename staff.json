@@ -1,0 +1,31 @@
+[
+  {
+    "hr": {
+      "max": 1000,
+      "price": 100,
+      "revenue": 20,
+      "costs": {
+        "accident": 200,
+        "holiday": 200
+      }
+    },
+    "hacker": {
+      "max": 1000,
+      "price": 10000,
+      "revenue": 1000,
+      "costs": {
+        "accident": 10000,
+        "holiday": 1000
+      }
+    },
+    "spy": {
+      "max": 2,
+      "price": 100000,
+      "revenue": 0,
+      "costs": {
+        "accident": 10000,
+        "holiday": 1000
+      }
+  }
+]
+
