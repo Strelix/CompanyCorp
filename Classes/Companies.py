@@ -1,15 +1,25 @@
 import json
+from Classes.Files import Files
+
+FILES = Files()
+
+staff_list = FILES.read_file('staff.json')
+
 class Company:
     def __init__(self, database, login):
+        self.staff = None
         self.DB = database
 
         self.login = login
 
-        self.login.users_company_id = None  # sets id
         self.company_name = None
         self.balance = None
         self.company_id = None
-        self.staff = []
+        # self.staff = {"hr": 0, "hacker": 0, "spy": 0}
+
+
+    def save(self):
+        self.DB.save_company(self.company_id, self.balance, self.staff, self.login.user_id)
 
     def __validate_name(self, name):
         for letter in name:
@@ -52,6 +62,7 @@ class Company:
                     self.company_name = company[1]
                     self.balance = company[2]
                     self.company_id = company[0]
+                    self.staff = company[3]
 
                     # for member in company[3]:
                     #
@@ -79,13 +90,30 @@ class Company:
 
 
     def add_money(self, amount):
+        self.balance += amount
         self.DB.add_company_money(self.login.users_company_id, amount)
 
     def remove_money(self, amount):
+        self.balance -= amount
         self.DB.remove_company_money(self.login.users_company_id, amount)
 
     def get_balance(self):
         return self.DB.get_company_balance(self.login.users_company_id)
 
-    # def hire_staff(self, type):
+    def get_staff(self):
+        return self.staff
 
+    def hire_staff(self, type):
+        if type in staff_list[0]:
+            item = staff_list[0][type]
+            price = item['price']
+            max = item['max']
+
+            if self.staff[type] < max:
+                self.staff[type] += 1
+                self.remove_money(price)
+
+                self.save()
+                return self.staff
+
+        return False

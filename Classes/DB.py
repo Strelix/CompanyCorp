@@ -1,3 +1,5 @@
+import json
+
 import mariadb
 
 
@@ -21,10 +23,10 @@ class Database:
         except mariadb.Error as error_message:
             print(f'[SERVER] Database Error: {error_message}')
 
-    def __execute_params(self, statement, params):
+    def __execute_params(self, statement, *params):
         try:
             cursor = self.connection.cursor()
-            cursor.execute(statement, params)
+            cursor.execute(statement, *params)
             self.connection.commit()
             cursor.close()
         except mariadb.Error as error_message:
@@ -59,10 +61,8 @@ class Database:
     def create_company(self, name, owner_id):
         self.__execute_params('INSERT INTO companies (name, owner_id) VALUES (?, ?)', (name, owner_id))
 
-
     def add_company_to_user(self, company_id, user_id):
         self.__execute(f'UPDATE `users` SET company_id = {company_id} WHERE id={user_id}')
-
 
     def add_company_money(self, company_id, amount):
         current = self.__get_execute(f'SELECT * FROM companies WHERE id = {company_id}')
@@ -78,6 +78,12 @@ class Database:
 
     def get_company_balance(self, company_id):
         return self.__get_execute(f'SELECT * FROM companies WHERE id = {company_id}')[0][2]
+
+    def save_company(self, company_id, balance, staff, owner_id):
+        # print(f'STAFF: ')
+        return self.__execute_params(
+            f'UPDATE companies SET company_id = {company_id}, \
+            balance = ?, staff = ? WHERE company_id = ? AND owner_id = ?;', balance, staff, company_id, owner_id)
 
     # TODO: v
     def get_user_by_id(self):

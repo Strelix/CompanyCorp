@@ -59,6 +59,7 @@ class Login:
 
     def login(self, username, pin):
         info = self.__get_info_by_username(username)
+        
         if hashlib.sha256(pin.encode()).hexdigest() == info[2]:
             self.logged_in = True
             self.username = username

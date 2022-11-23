@@ -22,5 +22,17 @@
     "type": "balance",
     "action": "",
     "description": "View the balance of your company!"
+  },
+  {
+    "command": "hire",
+    "type": "hire",
+    "action": "",
+    "description": "Hire staff to help your company grow! Use !hire list to see the type of staff you can hire."
+  },
+  {
+    "command": "staff",
+    "type": "staff",
+    "action": "",
+    "description": "View all of your staff!"
   }
 ]
