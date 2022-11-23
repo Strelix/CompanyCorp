@@ -1,5 +1,5 @@
-from Classes.Login import Login
-from Classes.Companies import Company
+# from Classes.Login import Login
+from Classes.Companies import Company, Login
 from Classes.DB import Database
 from Classes.Files import Files
 from getpass import getpass
@@ -14,8 +14,8 @@ command_actions = {}
 prefix = '!'
 
 DB = Database()
-LOGIN = Login(DB)
-COMPANIES = Company(DB, LOGIN)
+COMPANIES = Company(DB)
+LOGIN = COMPANIES.LOGIN
 
 for command in commands:
     index = commands.index(command)
