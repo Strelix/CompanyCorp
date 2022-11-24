@@ -93,6 +93,7 @@ class Company:
                 self.company_id = item[0]
 
                 self.staff = dict(json.loads(item[3]))
+                self.owner_id = item[5]
 
         self.company_id = comp_id
 
@@ -123,7 +124,7 @@ class Company:
             item = staff_list[0][type]
             price = item['price']
             max = item['max']
-
+            print(f'STAFF AMOUNT {self.staff[type]}, MAX: {max}')
             if float(self.staff[type]) < float(max):
                 self.staff[type] += 1
                 self.remove_money(price)
@@ -132,3 +133,10 @@ class Company:
                 return self.staff
 
         return False
+
+
+    def delete_company(self):
+        self.DB.delete_company(self.company_id, self.login.user_id)
+
+    def get_company_info(self):
+        return {"id": self.company_id, "name": self.company_name, "balance": self.balance, "staff": self.staff}

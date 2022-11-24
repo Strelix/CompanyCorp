@@ -63,5 +63,10 @@
     "type": "",
     "action": "",
     "description": "Deletes your company! Be careful with this command..."
+  },{
+    "command": "info",
+    "type": "",
+    "action": "",
+    "description": "Displays you your companies info!"
   }
 ]

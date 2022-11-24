@@ -8,7 +8,7 @@ from getpass import getpass
 
 FILES = Files()
 commands = FILES.read_file('commands.json')
-displays = FILES.read_file('display.json')
+displays = FILES.read_file('display.json')[0]
 staff_list = FILES.read_file('staff.json')
 command_list = []
 command_action_list = []
@@ -42,7 +42,7 @@ while not quit:
                         found = True
 
                         if current['type'] == 'display':
-                            print(displays[0][current['action']])
+                            print(displays[current['action']])
 
                         if current['command'] == 'login':
                             if not LOGIN.logged_in:
@@ -73,13 +73,17 @@ while not quit:
 
                                 print(COMPANIES.create(name))
                             else:
-                                print(displays[0]['login'])
+                                print(displays['login'])
 
 
                         if current['command'] == 'balance':
                             if not LOGIN.logged_in:
-                                print(displays[0]['login'])
+                                print(displays['login'])
                                 continue
+                            if not COMPANIES.company_name:
+                                print(displays['company_needed'])
+                                continue
+
 
                             print(f'Your companies balance is currently: {COMPANIES.balance}')
 
@@ -92,7 +96,7 @@ while not quit:
                                         amount = COMPANIES.get_staff()[user_command[1]]
                                         print(f'Hired! You now have {amount} {user_command[1]} members.')
                                     else:
-                                        print(displays[0]["login"])
+                                        print(displays["login"])
                             else:
                                 print('You can hire all of these staff:')
                                 for name in staff_list[0]:
@@ -106,15 +110,37 @@ while not quit:
                                 print(COMPANIES.get_staff())
 
                             else:
-                                print(displays[0]["login"])
+                                print(displays["login"])
 
 
                         if current['command'] == 'logout':
                             print(LOGIN.logout()[1])
 
 
+                        if current['command'] == 'delete':
+                            if LOGIN.logged_in:
+                                inp = input('Please type YES if you\'d like to delete your company.\n\n  >  ')
+
+                                if inp.lower() == 'yes':
+                                    COMPANIES.delete_company()
+                                    print(display['deleted'])
+                                else:
+                                    print('Okay! I won\'t delete your company.')
+                            else:
+                                print(displays['login'])
 
 
+                        if current['command'] == 'info':
+                            if LOGIN.logged_in:
+                                info = COMPANIES.get_company_info()
+                                print(info)
+                                print(f'Your company info:\n--------------\n'
+                                      f'NAME: {info["name"]}'
+                                      f' ({info["id"]})\n'
+                                      f'BALANCE:  £{format(info["balance"], ",.2f")}\n'
+                                      f'STAFF: {info["staff"]}')
+                            else:
+                                print(displays['login'])
 
                         if current['command'] == 'exit':
                             break

@@ -82,11 +82,15 @@ class Database:
         return self.__get_execute(f'SELECT * FROM companies WHERE id = {company_id}')[0][2]
 
     def save_company(self, company_id, balance, staff, owner_id):
-        staff = str(staff)
+        staff = json.dumps(staff)
+        print(staff)
         # print(f'UPDATE companies SET balance = {balance}, staff = {staff} WHERE company_id = {company_id} AND owner_id = {owner_id};')
         self.__execute_params(
             f'UPDATE companies SET balance = ?, staff = ? WHERE id = ? AND owner_id = ?;', balance, staff, company_id, owner_id)
 
+    def delete_company(self, id, owner_id):
+        self.__execute_params('DELETE FROM companies WHERE id = ? AND owner_id = ?', id, owner_id)
+        self.__execute_params('UPDATE companies set company_id = 0 WHERE id = ? AND company_id = ?', owner_id, id )
 
 
 
