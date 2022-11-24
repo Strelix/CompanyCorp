@@ -17,6 +17,18 @@
     "action": "",
     "description": "Login to your account, to save / load your data!"
   },
+    {
+    "command": "signup",
+    "type": "signup",
+    "action": "",
+    "description": "Make an account! Needed to save your data."
+  },
+  {
+    "command": "create",
+    "type": "create",
+    "action": "",
+    "description": "Create a new company!"
+  },
   {
     "command": "balance",
     "type": "balance",
@@ -34,5 +46,17 @@
     "type": "staff",
     "action": "",
     "description": "View all of your staff!"
+  },
+  {
+    "command": "exit",
+    "type": "",
+    "action": "",
+    "description": "Goodbye!"
+  },
+    {
+    "command": "logout",
+    "type": "",
+    "action": "",
+    "description": "Log out of your account!"
   }
 ]

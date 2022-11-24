@@ -1,8 +1,10 @@
-# from Classes.Login import Login
-from Classes.Companies import Company, Login
+from Classes.Login import Login
+from Classes.Companies import Company
 from Classes.DB import Database
 from Classes.Files import Files
 from getpass import getpass
+
+
 
 FILES = Files()
 commands = FILES.read_file('commands.json')
@@ -14,8 +16,8 @@ command_actions = {}
 prefix = '!'
 
 DB = Database()
-COMPANIES = Company(DB)
-LOGIN = COMPANIES.LOGIN
+LOGIN = Login(DB)
+COMPANIES = LOGIN.COMPANY
 
 for command in commands:
     index = commands.index(command)
@@ -25,7 +27,7 @@ for command in commands:
 quit = False
 joined = False
 while not quit:
-    try:
+    # try:
         if not joined:
             print('Welcome to the game! Use !help to get started. \n')
             joined = True
@@ -51,10 +53,33 @@ while not quit:
                                     COMPANIES.set_company_info(LOGIN.users_company_id)
                                 else:
                                     print('Make sure your pin is 4 digits long!')
+                            else:
+                                print('You\'re already logged in!')
+
+                        if current['command'] == 'signup':
+                            if not LOGIN.logged_in:
+                                username = input('Please enter a username you\'d like you have\n     >  ')
+                                pin = getpass('Please enter a four digit pin\n     >  ')
+
+                                print(LOGIN.signUp(username, pin)[1])
+
+                        if current['command'] == 'create':
+                            if LOGIN.logged_in:
+                                try:
+                                    if user_command[1]:
+                                        name = user_command([1])
+                                except:
+                                    name = input('Please enter a name for your company\n\n  >  ')
+
+                                print('DONE')
+                                print(COMPANIES.create(name))
+                            else:
+                                print(displays[0]['login'])
+
 
                         if current['command'] == 'balance':
                             if not LOGIN.logged_in:
-                                print('Please login first using !login.')
+                                print(displays[0]['login'])
                                 continue
 
                             print(f'Your companies balance is currently: {COMPANIES.balance}')
@@ -84,8 +109,15 @@ while not quit:
                             else:
                                 print(displays[0]["login"])
 
-    except:
-        pass
+
+                        if current['command'] == 'logout':
+                            print(LOGIN.logout()[1])
+
+                        if current['command'] == 'exit':
+                            break
+
+    # except Exception as error:
+    #     print(f'[ERROR] {error}')
 
 # LOGIN.login('Trey', '1234')
 #

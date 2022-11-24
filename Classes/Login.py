@@ -1,11 +1,11 @@
 import json
 import hashlib
-
+from Classes.Companies import Company
 
 class Login:
     def __init__(self, Database):
         self.DB = Database
-
+        self.COMPANY = Company(self.DB, self)
 
         self.logged_in = False
         self.username = None
@@ -70,6 +70,8 @@ class Login:
             if info[4]:
                 self.users_company_id = info[4]
 
+            self.COMPANY.set_company_info(self.users_company_id)
+
             return True, f'Successfully logged in!'
         else:
             return False, 'Login incorrect, please try again.'
@@ -80,7 +82,7 @@ class Login:
         self.user_id = None
         self.admin = False
         self.users_company_id = None
-        print('You\'re now logged out!')
+        return True, 'You\'re now logged out!'
 
 
     def signUp(self, username, pin):

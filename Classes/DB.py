@@ -26,7 +26,7 @@ class Database:
     def __execute_params(self, statement, *params):
         try:
             cursor = self.connection.cursor()
-            cursor.execute(statement, *params)
+            cursor.execute(statement, params)
             self.connection.commit()
             cursor.close()
         except mariadb.Error as error_message:
@@ -59,7 +59,9 @@ class Database:
         self.__execute_params(statement, (username, pin))
 
     def create_company(self, name, owner_id):
-        self.__execute_params('INSERT INTO companies (name, owner_id) VALUES (?, ?)', (name, owner_id))
+        statement = 'INSERT INTO companies (name, owner_id) VALUES (?, ?)'
+        self.__execute_params(statement, name, owner_id)
+        return
 
     def add_company_to_user(self, company_id, user_id):
         self.__execute(f'UPDATE `users` SET company_id = {company_id} WHERE id={user_id}')
