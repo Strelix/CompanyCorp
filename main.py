@@ -71,7 +71,6 @@ while not quit:
                                 except:
                                     name = input('Please enter a name for your company\n\n  >  ')
 
-                                print('DONE')
                                 print(COMPANIES.create(name))
                             else:
                                 print(displays[0]['login'])
@@ -112,6 +111,10 @@ while not quit:
 
                         if current['command'] == 'logout':
                             print(LOGIN.logout()[1])
+
+
+
+
 
                         if current['command'] == 'exit':
                             break

@@ -58,5 +58,10 @@
     "type": "",
     "action": "",
     "description": "Log out of your account!"
+  }, {
+    "command": "delete",
+    "type": "",
+    "action": "",
+    "description": "Deletes your company! Be careful with this command..."
   }
 ]

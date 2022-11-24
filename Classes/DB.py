@@ -56,11 +56,11 @@ class Database:
     def append_user(self, username, pin):
         hashed_pin = pin
         statement = 'INSERT INTO users (username, pin) VALUES (?, ?)'
-        self.__execute_params(statement, (username, pin))
+        self.__execute_params(statement, username, pin)
 
     def create_company(self, name, owner_id):
-        statement = 'INSERT INTO companies (name, owner_id) VALUES (?, ?)'
-        self.__execute_params(statement, name, owner_id)
+        statement = 'INSERT INTO companies (name, owner_id, staff) VALUES (?, ?, ?)'
+        self.__execute_params(statement, name, owner_id, '{"hr": 0, "hacker": 0, "spy": 0}')
         return
 
     def add_company_to_user(self, company_id, user_id):
@@ -82,10 +82,13 @@ class Database:
         return self.__get_execute(f'SELECT * FROM companies WHERE id = {company_id}')[0][2]
 
     def save_company(self, company_id, balance, staff, owner_id):
-        # print(f'STAFF: ')
-        return self.__execute_params(
-            f'UPDATE companies SET company_id = {company_id}, \
-            balance = ?, staff = ? WHERE company_id = ? AND owner_id = ?;', balance, staff, company_id, owner_id)
+        staff = str(staff)
+        # print(f'UPDATE companies SET balance = {balance}, staff = {staff} WHERE company_id = {company_id} AND owner_id = {owner_id};')
+        self.__execute_params(
+            f'UPDATE companies SET balance = ?, staff = ? WHERE id = ? AND owner_id = ?;', balance, staff, company_id, owner_id)
+
+
+
 
     # TODO: v
     def get_user_by_id(self):

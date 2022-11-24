@@ -19,10 +19,13 @@ class Company:
         self.company_name = None
         self.balance = None
         self.company_id = None
-        # self.staff = {"hr": 0, "hacker": 0, "spy": 0}
+        # self.staff =
+        # {"hr": 0, "hacker": 0, "spy": 0}
+        # [0,0,0]
 
 
     def save(self):
+        print(f'INFO: {self.company_id, self.balance, self.staff, self.login.user_id}')
         self.DB.save_company(self.company_id, self.balance, self.staff, self.login.user_id)
 
     def __validate_name(self, name):
@@ -88,8 +91,8 @@ class Company:
                 self.company_name = item[1]
                 self.balance = item[2]
                 self.company_id = item[0]
-                self.staff = json.loads(item[3])[0]
-                print(f'Staff: {self.staff}')
+
+                self.staff = dict(json.loads(item[3]))
 
         self.company_id = comp_id
 
@@ -121,7 +124,7 @@ class Company:
             price = item['price']
             max = item['max']
 
-            if self.staff[type] < max:
+            if float(self.staff[type]) < float(max):
                 self.staff[type] += 1
                 self.remove_money(price)
 
