@@ -4,6 +4,7 @@ from Classes.Companies import Company
 from Classes.DB import Database
 from Classes.Files import Files
 from getpass import getpass
+import sys, os
 
 ## END IMPORTS ##
 
@@ -29,7 +30,6 @@ for command in commands:
     index = commands.index(command)
     command_list.append(command["command"])
     command_action_list.append(command)
-
 quit = False
 joined = False
 while not quit:
@@ -56,7 +56,7 @@ while not quit:
                                 if len(pin) == 4 and pin.isnumeric():
                                     login_msg = LOGIN.login(username, pin)
                                     if login_msg[0]:  # If login_msg = True not False
-                                        COMPANIES.set_company_info(LOGIN.users_company_id)
+                                        print(COMPANIES.set_company_info(LOGIN.users_company_id))
                                         print(displays['dashes'])
                                         print(displays['success_login'].format(LOGIN.username))
                                         print(displays['dashes'])
@@ -149,12 +149,11 @@ while not quit:
                             else:
                                 print(displays['login'])
 
-                        if current['command'] == 'g':
-                            us = DB.get_all_users()
-                            print(us, type(us))
-
                         if current['command'] == 'exit':
+                            quit = True
                             break
 
     except Exception as error:
         print(f'[ERROR] {error}')
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]

@@ -50,15 +50,17 @@ class Company:
 
     # Check if a user already owns a company
     def __check_users_company(self, owner) -> bool:
-        if self.login.logged_in and self.login.users_company_id != None:
-            return False
-        return True
+        if self.login.users_company_id != None:
+            return True
+        return False
+
+
 
     # CREATES A COMPANY
     def create(self, name):
         if self.__validate_name(name) and \
             not self.__check_exists(name) and \
-            self.__check_users_company(self.login.user_id):
+            not self.__check_users_company(self.login.user_id):
                     self.DB.create_company(name, self.login.user_id)
                     companies = self.DB.get_all_companies()
                     for company in companies:
@@ -78,17 +80,18 @@ class Company:
             return False, 'Either your comapny name is invalid or the name is taken! Make sure it doesn\'t contain symbols.'
 
     def set_company_info(self, comp_id):
-        data = self.DB.get_all_companies()
-        for item in data:
-            if item[0] == comp_id:
-                self.company_name = item[1]
-                self.balance = item[2]
-                self.company_id = item[0]
+        data = self.DB.get_company_from_id(comp_id)
+        if data:
+            self.company_name = item[1]
+            self.balance = item[2]
+            self.company_id = item[0]
 
-                self.staff = dict(json.loads(item[3]))
-                self.owner_id = item[4]
+            self.staff = dict(json.loads(item[3]))
+            self.owner_id = item[4]
 
-        self.company_id = comp_id
+            self.company_id = comp_id
+
+        return data
 
     def get_company(self):
         if not self.__check_users_company(self.login.user_id):

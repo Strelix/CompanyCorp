@@ -109,6 +109,11 @@ class Database:
     def get_user_from_name(self, username):
         return self.__get_execute_params('SELECT * FROM users WHERE username = ?', username)
 
+    def get_company_from_id(self, id):
+        return self.__get_execute_params('SELECT * FROM companies where id = ?', id)
+
+
+
     # TODO: v
     def get_user_by_id(self):
         print('a')
