@@ -4,6 +4,7 @@ from Classes.Companies import Company
 from Classes.DB import Database
 from Classes.Files import Files
 from getpass import getpass
+
 ## END IMPORTS ##
 
 ### SET VARIABLES ###
@@ -32,7 +33,7 @@ for command in commands:
 quit = False
 joined = False
 while not quit:
-    # try:
+    try:
         if not joined:
             print('Welcome to the game! Use !help to get started. \n')
             joined = True
@@ -45,7 +46,6 @@ while not quit:
                     current = command_action_list[commands.index(command)]
                     if current['command'] == user_command[0].replace(prefix, ''):
                         found = True
-
                         if current['type'] == 'display':
                             print(displays[current['action']])
 
@@ -55,13 +55,13 @@ while not quit:
                                 pin = getpass('Please enter your four digit pin\n     >  ')
                                 if len(pin) == 4 and pin.isnumeric():
                                     login_msg = LOGIN.login(username, pin)
-                                    if login_msg[0]:
+                                    if login_msg[0]:  # If login_msg = True not False
                                         COMPANIES.set_company_info(LOGIN.users_company_id)
                                         print(displays['dashes'])
                                         print(displays['success_login'].format(LOGIN.username))
                                         print(displays['dashes'])
                                     else:
-                                        print(login_msg[1])
+                                        print(login_msg[1])  # You need to login to perform this action
                                 else:
                                     print('Make sure your pin is 4 digits long!')
                             else:
@@ -86,7 +86,6 @@ while not quit:
                             else:
                                 print(displays['login'])
 
-
                         if current['command'] == 'balance':
                             if not LOGIN.logged_in:
                                 print(displays['login'])
@@ -95,9 +94,7 @@ while not quit:
                                 print(displays['company_needed'])
                                 continue
 
-
                             print(f'Your companies balance is currently: {COMPANIES.balance}')
-
 
                         if current['command'] == 'hire':
                             if len(user_command) > 1:
@@ -115,7 +112,6 @@ while not quit:
 
                                     print(f'{name} - £{format(type["price"], ",.2f")}')
 
-
                         if current['command'] == 'staff':
                             if COMPANIES.company_name != None and COMPANIES.company_id != None:
                                 print(COMPANIES.get_staff())
@@ -123,13 +119,11 @@ while not quit:
                             else:
                                 print(displays["login"])
 
-
                         if current['command'] == 'logout':
                             if LOGIN.logged_in:
                                 print(LOGIN.logout()[1])
                             else:
                                 print('You\'re already logged out! Silly.')
-
 
                         if current['command'] == 'delete':
                             if LOGIN.logged_in:
@@ -142,7 +136,6 @@ while not quit:
                                     print('Okay! I won\'t delete your company.')
                             else:
                                 print(displays['login'])
-
 
                         if current['command'] == 'info':
                             if LOGIN.logged_in:
@@ -163,5 +156,5 @@ while not quit:
                         if current['command'] == 'exit':
                             break
 
-    # except Exception as error:
-    #     print(f'[ERROR] {error}')
+    except Exception as error:
+        print(f'[ERROR] {error}')
