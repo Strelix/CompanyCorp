@@ -12,7 +12,8 @@ class Database:
                                               host='localhost')
             print('[SERVER] Database Connected')
         except mariadb.Error as error_message:
-            print(f'DB Error: {error_message}')
+            print(f'[SERVER] DataBase Error: {error_message}')
+            exit('')
 
     def __execute(self, statement):
         try:
@@ -53,12 +54,12 @@ class Database:
     def get_all_companies(self):
         return self.__get_execute('SELECT * FROM companies')
 
-    def append_user(self, username, pin):
+    def append_user(self, username, pin) -> None:
         hashed_pin = pin
         statement = 'INSERT INTO users (username, pin) VALUES (?, ?)'
         self.__execute_params(statement, username, pin)
 
-    def create_company(self, name, owner_id):
+    def create_company(self, name, owner_id) -> None:
         statement = 'INSERT INTO companies (name, owner_id, staff) VALUES (?, ?, ?)'
         self.__execute_params(statement, name, owner_id, '{"hr": 0, "hacker": 0, "spy": 0}')
         return

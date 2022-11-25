@@ -68,5 +68,11 @@
     "type": "",
     "action": "",
     "description": "Displays you your companies info!"
+  },
+  {
+    "command": "g",
+    "type": "",
+    "action": "",
+    "description": "Displays you your companies info!"
   }
 ]

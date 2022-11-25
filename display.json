@@ -4,6 +4,7 @@
     "commands": "Commands blah blah blah",
     "login": "Please login to perform this action!",
     "deleted": "Cool! Just deleted your company.",
-    "company_needed": "You need a company to perform this action!"
+    "company_needed": "You need a company to perform this action!",
+    "success_login": "You've successfully logged in as {}!"
   }
 ]

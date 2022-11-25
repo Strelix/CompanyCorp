@@ -1,6 +1,8 @@
+### IMPORTS ###
 import json
 import hashlib
 from Classes.Companies import Company
+## IMPORTS ##
 
 class Login:
     def __init__(self, Database):

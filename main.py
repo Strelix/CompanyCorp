@@ -1,11 +1,12 @@
+### IMPORTS ###
 from Classes.Login import Login
 from Classes.Companies import Company
 from Classes.DB import Database
 from Classes.Files import Files
 from getpass import getpass
+## END IMPORTS ##
 
-
-
+### SET VARIABLES ###
 FILES = Files()
 commands = FILES.read_file('commands.json')
 displays = FILES.read_file('display.json')[0]
@@ -15,9 +16,13 @@ command_action_list = []
 command_actions = {}
 prefix = '!'
 
+## END SET VAR ##
+
+### INITIALISE CLASSES ###
 DB = Database()
 LOGIN = Login(DB)
 COMPANIES = LOGIN.COMPANY
+## END INITIALISE CLASSES ##
 
 for command in commands:
     index = commands.index(command)
@@ -27,7 +32,7 @@ for command in commands:
 quit = False
 joined = False
 while not quit:
-    # try:
+    try:
         if not joined:
             print('Welcome to the game! Use !help to get started. \n')
             joined = True
@@ -49,8 +54,10 @@ while not quit:
                                 username = input('Please enter your username\n     >  ')
                                 pin = getpass('Please enter your four digit pin\n     >  ')
                                 if len(pin) == 4 and pin.isnumeric():
-                                    print(LOGIN.login(username, pin)[1])
+                                    LOGIN.login(username, pin)
+                                    print(1)
                                     COMPANIES.set_company_info(LOGIN.users_company_id)
+                                    print(displays['success_login'].format(LOGIN.username))
                                 else:
                                     print('Make sure your pin is 4 digits long!')
                             else:
@@ -114,7 +121,10 @@ while not quit:
 
 
                         if current['command'] == 'logout':
-                            print(LOGIN.logout()[1])
+                            if LOGIN.logged_in:
+                                print(LOGIN.logout()[1])
+                            else:
+                                print('You\'re already logged out! Silly.')
 
 
                         if current['command'] == 'delete':
@@ -142,12 +152,12 @@ while not quit:
                             else:
                                 print(displays['login'])
 
+                        if current['command'] == 'g':
+                            us = DB.get_all_users()
+                            print(us, type(us))
+
                         if current['command'] == 'exit':
                             break
 
-    # except Exception as error:
-    #     print(f'[ERROR] {error}')
-
-# LOGIN.login('Trey', '1234')
-#
-# COMPANIES.remove_money(1)
+    except Exception as error:
+        print(f'[ERROR] {error}')
