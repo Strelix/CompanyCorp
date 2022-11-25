@@ -74,6 +74,8 @@ class Company:
                             self.DB.add_company_to_user(self.company_id, self.login.user_id)
 
                             return True, f'Successfully created you a company! Your starter balance is {self.balance}'
+        else:
+            return False, 'Either your comapny name is invalid or the name is taken! Make sure it doesn\'t contain symbols.'
 
     def set_company_info(self, comp_id):
         data = self.DB.get_all_companies()
@@ -84,7 +86,7 @@ class Company:
                 self.company_id = item[0]
 
                 self.staff = dict(json.loads(item[3]))
-                self.owner_id = item[5]
+                self.owner_id = item[4]
 
         self.company_id = comp_id
 

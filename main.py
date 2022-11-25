@@ -32,7 +32,7 @@ for command in commands:
 quit = False
 joined = False
 while not quit:
-    try:
+    # try:
         if not joined:
             print('Welcome to the game! Use !help to get started. \n')
             joined = True
@@ -54,10 +54,14 @@ while not quit:
                                 username = input('Please enter your username\n     >  ')
                                 pin = getpass('Please enter your four digit pin\n     >  ')
                                 if len(pin) == 4 and pin.isnumeric():
-                                    LOGIN.login(username, pin)
-                                    print(1)
-                                    COMPANIES.set_company_info(LOGIN.users_company_id)
-                                    print(displays['success_login'].format(LOGIN.username))
+                                    login_msg = LOGIN.login(username, pin)
+                                    if login_msg[0]:
+                                        COMPANIES.set_company_info(LOGIN.users_company_id)
+                                        print(displays['dashes'])
+                                        print(displays['success_login'].format(LOGIN.username))
+                                        print(displays['dashes'])
+                                    else:
+                                        print(login_msg[1])
                                 else:
                                     print('Make sure your pin is 4 digits long!')
                             else:
@@ -78,7 +82,7 @@ while not quit:
                                 except:
                                     name = input('Please enter a name for your company\n\n  >  ')
 
-                                print(COMPANIES.create(name))
+                                print(COMPANIES.create(name)[1])
                             else:
                                 print(displays['login'])
 
@@ -159,5 +163,5 @@ while not quit:
                         if current['command'] == 'exit':
                             break
 
-    except Exception as error:
-        print(f'[ERROR] {error}')
+    # except Exception as error:
+    #     print(f'[ERROR] {error}')

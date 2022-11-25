@@ -45,6 +45,19 @@ class Database:
             print(f'[SERVER] Database Error: {error_message}')
             return
 
+    def __get_execute_params(self, statement, *params):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(statement, params)
+            saved = cursor.fetchall()
+            cursor.close()
+            return saved
+
+        except mariadb.Error as error_message:
+            print(f'[SERVER] Database Error: {error_message}')
+            return
+
+
     def __get_users(self):
         return self.__get_execute('SELECT * FROM users')
 
@@ -93,7 +106,8 @@ class Database:
         self.__execute_params('DELETE FROM companies WHERE id = ? AND owner_id = ?', id, owner_id)
         self.__execute_params('UPDATE companies set company_id = 0 WHERE id = ? AND company_id = ?', owner_id, id )
 
-
+    def get_user_from_name(self, username):
+        return self.__get_execute_params('SELECT * FROM users WHERE username = ?', username)
 
     # TODO: v
     def get_user_by_id(self):

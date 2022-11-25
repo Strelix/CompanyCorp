@@ -41,12 +41,12 @@ class Login:
         return okay
 
     def __get_info_by_username(self, username):
-        users = self.DB.get_all_users()
-
-        for user in users:
-            if user[1] == username:
-                return user
-
+        users = list(self.DB.get_user_from_name(username))
+        if len(users) != 0:
+            for user in users:
+                if user[1] == username:
+                    return user
+        return None
 
     def __pin_validation(self, pin):
         try:
@@ -61,22 +61,23 @@ class Login:
 
     def login(self, username, pin):
         info = self.__get_info_by_username(username)
-        
-        if hashlib.sha256(pin.encode()).hexdigest() == info[2]:
-            self.logged_in = True
-            self.username = username
-            self.user_id = info[0]
 
-            if info[3] == 1:
-                self.admin = True
-            if info[4]:
-                self.users_company_id = info[4]
-
-            self.COMPANY.set_company_info(self.users_company_id)
-
-            return True, f'Successfully logged in!'
+        if info != None:
+            info = list(info)
+            if hashlib.sha256(pin.encode()).hexdigest() == info[2] and username == info[1]:
+                self.logged_in = True
+                self.username = username
+                self.user_id = info[0]
+                if info[3] == 1:
+                    self.admin = True
+                if info[4]:
+                    self.users_company_id = info[4]
+                self.COMPANY.set_company_info(self.users_company_id)
+                return True, f'Successfully logged in!'
+            else:
+                return False, 'Login incorrect, please try again.'
         else:
-            return False, 'Login incorrect, please try again.'
+            return False, 'Login incorrect, please try again'
 
     def logout(self):
         self.logged_in = False
