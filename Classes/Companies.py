@@ -80,17 +80,13 @@ class Company:
             return False, 'Either your comapny name is invalid or the name is taken! Make sure it doesn\'t contain symbols.'
 
     def set_company_info(self, comp_id):
-        data = self.DB.get_company_from_id(comp_id)
+        data = list(self.DB.get_company_from_id(comp_id)[0])
         if data:
-            self.company_name = item[1]
-            self.balance = item[2]
-            self.company_id = item[0]
-
-            self.staff = dict(json.loads(item[3]))
-            self.owner_id = item[4]
-
-            self.company_id = comp_id
-
+            self.company_id = data[0]
+            self.company_name = data[1]
+            self.balance = data[2]
+            self.staff = dict(json.loads(data[3]))
+            self.owner_id = data[4]
         return data
 
     def get_company(self):
@@ -120,13 +116,19 @@ class Company:
             item = staff_list[0][type]
             price = item['price']
             max = item['max']
+            if self.balance >= price:
+                if float(self.staff[type]) < float(max):
+                    self.staff[type] += 1
+                    self.remove_money(price)
 
-            if float(self.staff[type]) < float(max):
-                self.staff[type] += 1
-                self.remove_money(price)
+                    self.save()
+                    return self.staff
+                else:
+                    return False, 'You have the maximum number of this staff type!'
+            else:
+                return False, 'You don\' have enough money to do this!'
 
-                self.save()
-                return self.staff
+
 
         return False
 

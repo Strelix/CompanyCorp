@@ -54,9 +54,12 @@ while not quit:
                                 username = input('Please enter your username\n     >  ')
                                 pin = getpass('Please enter your four digit pin\n     >  ')
                                 if len(pin) == 4 and pin.isnumeric():
+                                    print(1)
                                     login_msg = LOGIN.login(username, pin)
+                                    print(2)
                                     if login_msg[0]:  # If login_msg = True not False
                                         print(COMPANIES.set_company_info(LOGIN.users_company_id))
+                                        print(3)
                                         print(displays['dashes'])
                                         print(displays['success_login'].format(LOGIN.username))
                                         print(displays['dashes'])
@@ -100,9 +103,15 @@ while not quit:
                             if len(user_command) > 1:
                                 if user_command[1] in staff_list[0]:
                                     if COMPANIES.company_name != None and COMPANIES.company_id != None:
-                                        COMPANIES.hire_staff(user_command[1])
+                                        return_message = COMPANIES.hire_staff(user_command[1])
                                         amount = COMPANIES.get_staff()[user_command[1]]
-                                        print(f'Hired! You now have {amount} {user_command[1]} members.')
+                                        if return_message[0]:
+                                            print(displays['dashes'])
+                                            print(f'Hired! You now have {amount} {user_command[1]} members.')
+                                            print(displays['dashes'])
+
+                                        else:
+                                            print(return_message[1])
                                     else:
                                         print(displays["login"])
                             else:
@@ -153,7 +162,7 @@ while not quit:
                             quit = True
                             break
 
-    except Exception as error:
-        print(f'[ERROR] {error}')
+    except Exception:
+        # print(f'[ERROR] {error}')
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]

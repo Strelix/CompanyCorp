@@ -61,7 +61,6 @@ class Login:
 
     def login(self, username, pin):
         info = self.__get_info_by_username(username)
-
         if info != None:
             info = list(info)
             if hashlib.sha256(pin.encode()).hexdigest() == info[2] and username == info[1]:
