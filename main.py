@@ -16,7 +16,7 @@ staff_list = FILES.read_file('staff.json')
 command_list = []
 command_action_list = []
 command_actions = {}
-prefix = '!'
+PREFIX = '!'
 
 ## END SET VAR ##
 
@@ -30,22 +30,22 @@ for command in commands:
     index = commands.index(command)
     command_list.append(command["command"])
     command_action_list.append(command)
-quit = False
-joined = False
-while not quit:
+QUIT = False
+JOINED = False
+while not QUIT:
     try:
-        if not joined:
+        if not JOINED:
             print('Welcome to the game! Use !help to get started. \n')
-            joined = True
+            JOINED = True
 
         user_command = str(input('  >  ')).lower().split(' ')
-        if user_command[0].replace(prefix, '') in command_list:
-            found = False
+        if user_command[0].replace(PREFIX, '') in command_list:
+            FOUND = False
             for command in commands:
-                if not found:
+                if not FOUND:
                     current = command_action_list[commands.index(command)]
-                    if current['command'] == user_command[0].replace(prefix, ''):
-                        found = True
+                    if current['command'] == user_command[0].replace(PREFIX, ''):
+                        FOUND = True
                         if current['type'] == 'display':
                             print(displays[current['action']])
 
@@ -64,7 +64,7 @@ while not quit:
                                         print(displays['success_login'].format(LOGIN.username))
                                         print(displays['dashes'])
                                     else:
-                                        print(login_msg[1])  # You need to login to perform this action
+                                        print(login_msg[1])
                                 else:
                                     print('Make sure your pin is 4 digits long!')
                             else:
@@ -75,7 +75,7 @@ while not quit:
                                 username = input('Please enter a username you\'d like you have\n     >  ')
                                 pin = getpass('Please enter a four digit pin\n     >  ')
 
-                                print(LOGIN.signUp(username, pin)[1])
+                                print(LOGIN.sign_up(username, pin)[1])
 
                         if current['command'] == 'create':
                             if LOGIN.logged_in:
@@ -102,7 +102,7 @@ while not quit:
                         if current['command'] == 'hire':
                             if len(user_command) > 1:
                                 if user_command[1] in staff_list[0]:
-                                    if COMPANIES.company_name != None and COMPANIES.company_id != None:
+                                    if COMPANIES.company_name is not None and COMPANIES.company_id is not None:
                                         return_message = COMPANIES.hire_staff(user_command[1])
                                         amount = COMPANIES.get_staff()[user_command[1]]
                                         if return_message[0]:
@@ -117,12 +117,12 @@ while not quit:
                             else:
                                 print('You can hire all of these staff:')
                                 for name in staff_list[0]:
-                                    type = staff_list[0][name]
+                                    department = staff_list[0][name]
 
-                                    print(f'{name} - £{format(type["price"], ",.2f")}')
+                                    print(f'{name} - £{format(department["price"], ",.2f")}')
 
                         if current['command'] == 'staff':
-                            if COMPANIES.company_name != None and COMPANIES.company_id != None:
+                            if COMPANIES.company_name is not None and COMPANIES.company_id is not None:
                                 print(COMPANIES.get_staff())
 
                             else:
@@ -140,7 +140,7 @@ while not quit:
 
                                 if inp.lower() == 'yes':
                                     COMPANIES.delete_company()
-                                    print(display['deleted'])
+                                    print(displays['deleted'])
                                 else:
                                     print('Okay! I won\'t delete your company.')
                             else:
@@ -159,7 +159,7 @@ while not quit:
                                 print(displays['login'])
 
                         if current['command'] == 'exit':
-                            quit = True
+                            QUIT = True
                             break
 
     except Exception:

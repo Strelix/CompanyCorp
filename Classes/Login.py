@@ -1,12 +1,12 @@
 ### IMPORTS ###
-import json
+# import json
 import hashlib
 from Classes.Companies import Company
 ## IMPORTS ##
 
 class Login:
-    def __init__(self, Database):
-        self.DB = Database
+    def __init__(self, database):
+        self.DB = database
         self.COMPANY = Company(self.DB, self)
 
         self.logged_in = False
@@ -49,6 +49,7 @@ class Login:
         return None
 
     def __pin_validation(self, pin):
+        """RETURNS TRUE IF PIN IS VALID, ELSE FALSE"""
         try:
             if len(pin) != 4:
                 return False
@@ -57,11 +58,13 @@ class Login:
                 if not str.isnumeric(digit):
                     return False
             return True
-        except: pass
+        except:
+            return False
 
     def login(self, username, pin):
+        """LOGS INTO AN ACCOUNT USING NAME/PIN"""
         info = self.__get_info_by_username(username)
-        if info != None:
+        if info is not None:
             info = list(info)
             if hashlib.sha256(pin.encode()).hexdigest() == info[2] and username == info[1]:
                 self.logged_in = True
@@ -72,13 +75,11 @@ class Login:
                 if info[4]:
                     self.users_company_id = info[4]
                 self.COMPANY.set_company_info(self.users_company_id)
-                return True, f'Successfully logged in!'
-            else:
-                return False, 'Login incorrect, please try again.'
-        else:
-            return False, 'Login incorrect, please try again'
+                return True, 'Successfully logged in!'
+        return False, 'Login incorrect, please try again'
 
     def logout(self):
+        """LOGS OUT OF THE CURRENT LOGGED IN ACCOUNT"""
         self.logged_in = False
         self.username = None
         self.user_id = None
@@ -87,7 +88,8 @@ class Login:
         return True, 'You\'re now logged out!'
 
 
-    def signUp(self, username, pin):
+    def sign_up(self, username, pin):
+        """MAKES A NEW ACCOUNT"""
         if not self.__username_validation(username):
             return False, 'This username is invalid.'
         if self.__check_exists(username):
