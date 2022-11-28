@@ -15,9 +15,11 @@ class Window(customtkinter.CTk):
 
         self.screensize = self.winfo_screenwidth(), self.winfo_screenheight()
 
+
     def load_main(self):
-        topbar = TopBar.TopBar(self)
-        leftbar = LeftBar.LeftBar(self)
+        self.topbar = TopBar.TopBar(self)
+        self.leftbar = LeftBar.LeftBar(self)
+
 
 
         self.main_container = customtkinter.CTkFrame(master=self, width = self.screensize[0] - 100, height=self.screensize[1] - 120,
