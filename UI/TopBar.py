@@ -4,6 +4,10 @@ from customtkinter import LEFT, RIGHT, TOP, BOTTOM
 
 class TopBar:
     def __init__(self, main):
+
+
+
+
         self.top_bar = customtkinter.CTkFrame(master=main, width=main.screensize[0] * 0.975, height=75,
                                               corner_radius=15)
         self.top_bar.pack(side=TOP, padx=15, pady=15)

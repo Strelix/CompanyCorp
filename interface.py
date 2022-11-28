@@ -2,6 +2,7 @@ import customtkinter
 from customtkinter import LEFT, RIGHT, TOP, BOTTOM
 from UI import TopBar as TopBar
 from UI import LeftBar as LeftBar
+from UI import Main as Main
 
 customtkinter.set_default_color_theme('dark-blue')
 customtkinter.set_appearance_mode('dark')
@@ -19,18 +20,13 @@ class Window(customtkinter.CTk):
     def load_main(self):
         self.topbar = TopBar.TopBar(self)
         self.leftbar = LeftBar.LeftBar(self)
+        self.main = Main.Main(self)
 
 
+        self.topbar.text = customtkinter.CTkLabel(master=self.topbar.top_bar, text='TEST')
+        self.topbar.text.pack()
 
-        self.main_container = customtkinter.CTkFrame(master=self, width = self.screensize[0] - 100, height=self.screensize[1] - 120,
-                                                     corner_radius=20)
-        self.main_container.pack(padx=15, pady=15)
-        self.main_container.pack_propagate(False)
-
-        self.main_heading = customtkinter.CTkLabel(master=self.main_container, text='BLANK', text_font=('FredokaOne 15 bold'))
-        self.main_heading.pack(side =  TOP, pady = 15)
-
-
+        # self.topbar.
 
 
 

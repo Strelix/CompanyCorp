@@ -2,17 +2,34 @@ import customtkinter
 from PIL import ImageTk, Image
 from customtkinter import LEFT, RIGHT, TOP, BOTTOM
 
+
 class LeftBar:
     def __init__(self, main):
-        self.left_container = customtkinter.CTkFrame(master=main, width=100, height=main.screensize[1] - 120, corner_radius=20)
-        self.left_container.pack(side=customtkinter.LEFT, padx=15, pady=15)
-        self.left_container.pack_propagate(False)
-        
-        self.left_container_staff = customtkinter.CTkFrame(master=self.left_container, width=75, height=75, corner_radius= 20)
-        self.left_container_staff.pack(side=customtkinter.TOP, padx=15, pady=15)
+        self.container = customtkinter.CTkFrame(master=main, width=100, height=main.screensize[1] - 120,
+                                                     corner_radius=20)
+        self.container.pack(side=LEFT, padx=15, pady=15)
+        self.container.pack_propagate(False)
 
+        self.staff = customtkinter.CTkButton(master=self.container, hover_color='#333333',  fg_color='#222222', width=75, height=75, corner_radius=20)
+        self.staff.pack(side=TOP, padx=15, pady=15)
+        self.staff.propagate(False)
 
         staff = ImageTk.PhotoImage(file='./Assets/Staff.png')
-        self.left_container_staff_image = customtkinter.CTkButton(
-            master=self.left_container_staff, image=staff, text='', fg_color='#292929', corner_radius=20)
-        self.left_container_staff_image.pack()
+        login = None
+
+        self.staff_image = customtkinter.CTkButton(
+            master=self.staff, image=staff, text='',  fg_color='#222222', corner_radius=20)
+        self.staff_image.pack(padx=5, pady=15)
+
+        # self.staff_image.bind("<Enter>", lambda b:  self.staff_image.configure(background='green'))
+        # self.staff_image.bind("<Leave>", lambda b: self.staff_image.configure(background='red'))
+
+        self.settings = customtkinter.CTkButton(master=self.container, text='', hover_color='#333333', fg_color='#222222',  width=75, height=75, corner_radius=20)
+        self.settings.pack(side=BOTTOM, padx=15, pady=15)
+
+        self.login = customtkinter.CTkButton(master=self.container, text='', fg_color='#222222',  hover_color='#333333',  width=75, height=75, corner_radius=20)
+        self.login.pack(side=BOTTOM, padx=15, pady=15)
+
+
+
+
