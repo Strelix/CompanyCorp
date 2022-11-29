@@ -14,7 +14,7 @@ class TopBar:
         self.top_bar.propagate(False)
 
         self.top_bar_quit = customtkinter.CTkButton(master=self.top_bar, text='X', width=50, height=50)
-        self.top_bar_quit.pack(side=RIGHT, padx=10, pady=10)
+        self.top_bar_quit.pack(side=RIGHT, padx=(10,20), pady=10)
         self.top_bar_quit.configure(fg_color='#cc1b14', text_font=('FredokaOne 15 bold'), command=quit)
 
         self.top_bar_minmise = customtkinter.CTkButton(master=self.top_bar, text='_', width=50, height=50)
