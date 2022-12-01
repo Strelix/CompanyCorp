@@ -24,8 +24,8 @@ class Window(customtkinter.CTk):
         super().__init__()
 
         self.DB = Database()
-        self.LOGIN = Login(DB)
-        self.COMPANIES = LOGIN.COMPANY
+        self.LOGIN = Login(self.DB)
+        self.COMPANIES = self.LOGIN.COMPANY
 
         self.title('CompanyCorp')
         self.attributes('-fullscreen', True)
