@@ -27,7 +27,11 @@ class LeftBar:
         self.settings = customtkinter.CTkButton(master=self.container, text='', hover_color='#333333', fg_color='#222222',  width=75, height=75, corner_radius=20)
         self.settings.pack(side=BOTTOM, padx=15, pady=15)
 
-        self.login = customtkinter.CTkButton(master=self.container, text='', fg_color='#222222',  hover_color='#333333',  width=75, height=75, corner_radius=20)
+        self.login = customtkinter.CTkButton(master=self.container,
+                                             text='', fg_color='#222222',
+                                             hover_color='#333333',  width=75,
+                                             height=75, corner_radius=20,
+                                             command=lambda: main.main.change_page('LOGIN'))
         self.login.pack(side=BOTTOM, padx=15, pady=15)
 
 
