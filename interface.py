@@ -33,9 +33,14 @@ class Window(customtkinter.CTk):
         self.screensize = self.winfo_screenwidth(), self.winfo_screenheight()
 
         self.topbar = TopBar.TopBar(self)
-        self.leftbar = LeftBar.LeftBar(self)
+        self.leftbar: LeftBar.LeftBar = LeftBar.LeftBar(self)
+
         self.main = Main.Main(self)
         self.popup = Popup.Popup(self)
+
+        
+
+
 
 
 

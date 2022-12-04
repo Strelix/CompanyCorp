@@ -1,5 +1,5 @@
 import customtkinter
-import Classes.
+import Classes.TKMore
 from PIL import ImageTk, Image
 from customtkinter import LEFT, RIGHT, TOP, BOTTOM
 
@@ -33,7 +33,15 @@ class Main:
         page = page.lower()
         self.delete_item_list()
         if page == 'default:':
+            self.heading.set_text('MAIN')
+        elif page == 'change_page':
             pass
+        elif page == 'settings':
+            if not self.main_screen.LOGIN.logged_in:
+                return self.change_page('login')
+
+            pass
+
         elif page == 'login':
             self.heading.set_text('LOGIN')
 
@@ -53,23 +61,42 @@ class Main:
                                                         width=self.main_screen.screensize[0] * 0.3,
                                                         height=self.main_screen.screensize[1] * 0.1)
 
-
             self.pin_container.propagate(False)
             self.pin_text = customtkinter.CTkLabel(master=self.pin_container,
                                                    text='PIN: ', text_font=('FredokaOne 13 bold'))
             self.pin_field = customtkinter.CTkEntry(master=self.pin_container)
 
             self.msg = customtkinter.CTkLabel(master=self.container, text=' ')
-            self.make_account = customtkinter.CTkButton(master=self.container, text = 'Not got an account? Create 0ne!',
-                                                        command = lambda: self.change_page('create_account'),
+            self.make_account = customtkinter.CTkButton(master=self.container, text='Not got an account? Create 0ne!',
+                                                        command=lambda: self.change_page('create_account'),
                                                         fg_color='#2B2B2B', hover_color='medium purple')
+
+            self.cooldown = False
+
+            def login(username, password):
+                if not self.cooldown:
+                    response = self.main_screen.LOGIN.login(username, password)
+                    if response[0]:
+                        self.change_page()
+                    else:
+                        self.msg.set_text(response[1])
+                        self.msg.after(1000, lambda: self.msg.set_text(' '))
+
+                    self.cooldown = True
+
+                    def cooldown():
+                        self.cooldown = False
+
+                    self.make_account.after(1000, cooldown)
+                else:
+                    self.main_screen.popup.show_popup('You\'re on a cooldown! Please wait!', 3)
 
             self.login_button = customtkinter.CTkButton(master=self.container,
                                                         width=self.main_screen.screensize[0] * 0.3,
                                                         height=self.main_screen.screensize[1] * 0.06, text='LOGIN',
                                                         fg_color='purple', hover_color='medium purple',
-                                                        command=lambda: self.msg.set_text(self.main_screen.LOGIN.login(
-                                                            self.login_username_field.get(), self.pin_field.get())[1]))
+                                                        command=lambda: login(
+                                                            self.login_username_field.get(), self.pin_field.get()))
 
             self.pin_container.pack(side=TOP, pady=(30, 0))
             self.pin_text.pack(side=LEFT)
@@ -80,4 +107,4 @@ class Main:
 
             self.add_items_to_list(self.username_container, self.login_username_text, self.login_username_field,
                                    self.pin_container, self.pin_text, self.pin_field,
-                                   self.msg, self.login_button, make_account)
+                                   self.msg, self.login_button, self.make_account)
