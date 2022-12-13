@@ -32,7 +32,7 @@ class Main:
     def delete_item_list(self) -> None:
         return [item.destroy() for item in self.items]
 
-    def change_page(self, page='default'):
+    def change_page(self, page='default', *arguments):
         page = page.lower()
 
         self.delete_item_list()
@@ -43,3 +43,9 @@ class Main:
             self.register = Register.RegisterMain(self)
         elif page == 'login':
             self.login = Login.LoginMain(self)
+        elif page == 'staff':
+            pass
+        elif page == ' hack':
+            pass
+        elif page == '':
+            pass

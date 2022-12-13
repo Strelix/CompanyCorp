@@ -36,7 +36,7 @@ class LoginMain:
                 self.VIEW = not self.VIEW
 
             self.show = customtkinter.CTkButton(master=self.pin_container, command=lambda: toggle_view())
-            self.show.configure(width=self.pin_field.winfo_height(), text=' ', fg_color='#222222')
+            self.show.configure(width=self.pin_field.winfo_height(), text=' ', fg_color='purple', hover_color='medium purple')
             self.show.pack(side=RIGHT, padx=(0, 20))
 
             self.msg = customtkinter.CTkLabel(master=main.container, text=' ')
