@@ -18,7 +18,7 @@ class Popup:
         self.heading.pack(side=TOP, pady=15)
 
         self.message = customtkinter.CTkLabel(master=self.container, text = ' ')
-        self.message.pack(side=BOTTOM)
+        self.message.pack(side=TOP)
 
 
     def show_popup(self, message,seconds = 5, announcement_type = 'MESSAGE'):
