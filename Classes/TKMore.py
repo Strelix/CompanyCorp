@@ -5,4 +5,7 @@ class TKMore:
         pass
 
     def multi_pack(self, *items):
-        return [item.pack(side=place) for item,place in items]
+        for item in items:
+            item[0].pack(side=item[1])
+
+        return

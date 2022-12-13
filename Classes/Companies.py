@@ -80,7 +80,11 @@ class Company:
             return False, 'Either your comapny name is invalid or the name is taken! Make sure it doesn\'t contain symbols.'
 
     def set_company_info(self, comp_id):
-        data = list(self.DB.get_company_from_id(comp_id)[0])
+        try:
+            data = list(self.DB.get_company_from_id(comp_id)[0])
+        except:
+            data = None
+
         if data:
             self.company_id = data[0]
             self.company_name = data[1]

@@ -102,4 +102,4 @@ class Login:
 
         self.DB.append_user(username, hashed_pin)
 
-        return True, f'Created user with the username of {username}! Please use !login to login with this account.'
+        return True, f'Created user with the username of {username}! Please press below to login with this account.'
