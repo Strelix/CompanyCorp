@@ -3,8 +3,10 @@ from PIL import ImageTk, Image
 from customtkinter import LEFT, RIGHT, TOP, BOTTOM
 
 class LoginMain:
+
     def __init__(self, main):
             self.VIEW = False
+            self.main_screen = main
             main.heading.set_text('LOGIN')
 
             self.username_container = customtkinter.CTkFrame(master=main.container,
@@ -48,8 +50,7 @@ class LoginMain:
                                                         width=main.main_screen.screensize[0] * 0.3,
                                                         height=main.main_screen.screensize[1] * 0.06, text='LOGIN',
                                                         fg_color='purple', hover_color='medium purple',
-                                                        command=lambda: self.msg.set_text(main.main_screen.LOGIN.login(
-                                                            self.login_username_field.get(), self.pin_field.get())[1]))
+                                                        command=self.login_button_press)
 
             self.pin_container.pack(side=TOP, pady=(30, 0))
             self.pin_text.pack(side=LEFT)
@@ -61,3 +62,11 @@ class LoginMain:
             main.add_items_to_list(self.username_container, self.login_username_text, self.login_username_field,
                                    self.pin_container, self.pin_text, self.pin_field,
                                    self.msg, self.login_button, self.make_account, self.show)
+
+    def login_button_press(self):
+        login_result = self.main_screen.main_screen.LOGIN.login(
+            self.login_username_field.get(), self.pin_field.get())
+        self.msg.set_text(login_result[1])
+
+        if login_result[0]:
+            self.login_button.after(200, lambda: self.main_screen.change_page('profile'))

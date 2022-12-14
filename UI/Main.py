@@ -1,15 +1,22 @@
 import customtkinter
-import Classes.TKMore
+import Classes.TKMore as TKMoreClass
 from PIL import ImageTk, Image
 from customtkinter import LEFT, RIGHT, TOP, BOTTOM
 
-from UI import Login as Login
-from UI import Register as Register
+from UI.MainPages import Login as Login
+from UI.MainPages import Register as Register
+from UI.MainPages import Profile as Profile
+
+from UI.MainPages import Settings as Settings
+from UI.MainPages import Staff as Staff
+from UI.MainPages import Hack as Hack
+
 
 
 class Main:
     def __init__(self, main):
         self.main_screen = main
+        self.TKMore = TKMoreClass.TKMore()
         self.items = []
 
         self.container = customtkinter.CTkFrame(master=main, width=main.screensize[0] - 100,
@@ -37,15 +44,26 @@ class Main:
 
         self.delete_item_list()
 
-        if page == 'default:':
-            pass
-        elif page == 'create_account':
+        if page == 'default':
+            self.heading.set_text('WELCOME!')
+        if page == 'create_account':
             self.register = Register.RegisterMain(self)
-        elif page == 'login':
-            self.login = Login.LoginMain(self)
-        elif page == 'staff':
-            pass
-        elif page == ' hack':
-            pass
-        elif page == '':
-            pass
+
+        if page == 'login':
+            if self.main_screen.LOGIN.logged_in:
+                self.change_page('profile')
+            else:
+                self.login = Login.LoginMain(self)
+
+        if page == 'profile':
+            if self.main_screen.LOGIN.logged_in:
+                self.profile = Profile.ProfileMain(self)
+
+        if page == 'staff':
+            self.staff = Staff.StaffMain(self)
+
+        if page == ' hack':
+            self.hack = Hack.HackMain(self)
+
+        if page == 'settings':
+            self.settings = Settings.SettingsMain(self)
