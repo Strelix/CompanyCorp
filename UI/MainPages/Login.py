@@ -24,8 +24,6 @@ class LoginMain:
             self.pin_container = customtkinter.CTkFrame(master=main.container,
                                                         width=main.main_screen.screensize[0] * 0.3,
                                                         height=main.main_screen.screensize[1] * 0.1)
-
-
             self.pin_container.propagate(False)
             self.pin_text = customtkinter.CTkLabel(master=self.pin_container,
                                                    text='PIN: ', text_font=('FredokaOne 13 bold'))
