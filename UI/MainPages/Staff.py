@@ -23,6 +23,8 @@ class StaffMain:
         if allowed:
             print('ALLOWED')
 
+        self.MAINSCREEN.main_screen.update_idletasks()
+
     def __check_logged_in(self) -> bool:
         return True if self.LOGINCLASS.user_id is not None and self.LOGINCLASS.username is not None\
                        or self.LOGINCLASS.logged_in else False
@@ -37,8 +39,13 @@ class StaffMain:
         if login and comp:
             return True
 
-        self.displayText = customtkinter.CTkLabel(master=self.container)
-        self.displayText.pack(side=TOP)
+        self.MAINSCREEN.main_screen.update_idletasks()
+
+        CONT_SIZE = self.container.winfo_height()
+        CONT_SIZE = (CONT_SIZE / 2) - (CONT_SIZE * 0.05)
+
+        self.displayText = customtkinter.CTkLabel(master=self.container, text_font='fredoka 15 bold')
+        self.displayText.pack(side=TOP, pady=(CONT_SIZE, 0))
         self.MAINSCREEN.add_items_to_list(self.displayText)
 
         if not login:
