@@ -10,10 +10,17 @@ class TKMore:
     def button_purple(self, master, text='BTN') -> object:
         return customtkinter.CTkButton(master=master, text=text, fg_color='purple', hover_color='medium purple')
 
-    def container_main(self, master, main) -> object:
+    def container_main(self, master: object, main: object) -> object:
+        """
+
+        :rtype: object
+        self.username_container.pack(side=TOP, pady=(main.main_screen.screensize[1] * 0.1, 0))
+        self.username_container.propagate(False)
+        """
         return customtkinter.CTkFrame(master=master,
                                       width=main.main_screen.screensize[0] * 0.3,
                                       height=main.main_screen.screensize[1] * 0.1)
 
-        # self.username_container.pack(side=TOP, pady=(main.main_screen.screensize[1] * 0.1, 0))
-        # self.username_container.propagate(False)
+
+    def test(self):
+        self.container_main()
