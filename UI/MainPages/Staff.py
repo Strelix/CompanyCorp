@@ -3,7 +3,9 @@ import customtkinter
 from Classes import TKMore as TKMore
 from PIL import ImageTk, Image
 from customtkinter import LEFT, RIGHT, TOP, BOTTOM
+
 TkMore = TKMore.TKMore()
+
 
 class StaffMain:
     def __init__(self, main):
@@ -21,16 +23,24 @@ class StaffMain:
         allowed = self.__check_company_requirements()
 
         if allowed:
-            print('ALLOWED')
+            LOAD_STAFF = self.__load_staff()
+
+            self.hire_staff = TkMore.button_purple(self.container, 'HIRE STAFF')
+            self.hire_staff.configure(command=self.__hire_staff)
+            self.hire_staff.pack()
+            self.MAINSCREEN.add_items_to_list(self.hire_staff)
+
+            if LOAD_STAFF:
+                pass
 
         self.MAINSCREEN.main_screen.update_idletasks()
 
     def __check_logged_in(self) -> bool:
-        return True if self.LOGINCLASS.user_id is not None and self.LOGINCLASS.username is not None\
+        return True if self.LOGINCLASS.user_id is not None and self.LOGINCLASS.username is not None \
                        or self.LOGINCLASS.logged_in else False
 
     def __check_has_company(self) -> bool:
-        return False if self.COMPANYCLASS.company_name is not None\
+        return False if self.COMPANYCLASS.company_name is not None \
                         or self.COMPANYCLASS.company_id is not None else True
 
     def __check_company_requirements(self) -> bool:
@@ -55,3 +65,20 @@ class StaffMain:
                                             'the "COMPANY" panel.')
 
         return False
+
+    def __load_staff(self):
+        pass
+
+    def __hire_staff(self):
+        all_staff = self.MAINSCREEN.main_screen.FILES.read_file('staff.json')[0]
+        options = []
+        [options.append(x.capitalize() if x != 'hr' else 'HR') for x in all_staff]
+        print(options)
+
+        self.select_staff_hire = customtkinter.CTkOptionMenu(self.container, values=options)
+        self.select_staff_hire.set('Select')
+        self.MAINSCREEN.add_items_to_list(self.select_staff_hire)
+        self.select_staff_hire.pack()
+
+    def __buy_staff(self):
+        pass

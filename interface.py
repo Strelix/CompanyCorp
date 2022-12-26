@@ -8,6 +8,7 @@ from UI import Popup as Popup
 from Classes.Login import Login
 from Classes.Companies import Company
 from Classes.DB import Database
+from Classes.Files import Files
 
 from getpass import getpass
 import sys, os
@@ -26,6 +27,7 @@ class Window(customtkinter.CTk):
         self.DB = Database()
         self.LOGIN = Login(self.DB)
         self.COMPANIES = self.LOGIN.COMPANY
+        self.FILES = Files()
 
         self.title('CompanyCorp')
         self.attributes('-fullscreen', True)

@@ -26,6 +26,16 @@
         "accident": 10000,
         "holiday": 1000
       }
+    },
+    "manager": {
+      "max": 1,
+      "price": 1000000,
+      "revenue": 0,
+      "costs": {
+        "accident": 10000,
+        "holiday": 1000
+      }
     }
-  }]
+  }
+]
 
