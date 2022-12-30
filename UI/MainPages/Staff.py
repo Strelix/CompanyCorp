@@ -73,12 +73,13 @@ class StaffMain:
         all_staff = self.MAINSCREEN.main_screen.FILES.read_file('staff.json')[0]
         options = []
         [options.append(x.capitalize() if x != 'hr' else 'HR') for x in all_staff]
-        print(options)
-
         self.select_staff_hire = customtkinter.CTkOptionMenu(self.container, values=options)
         self.select_staff_hire.set('Select')
         self.MAINSCREEN.add_items_to_list(self.select_staff_hire)
         self.select_staff_hire.pack()
+
+        self.hire_staff_hire_btn = TkMore.button_purple(self.container, 'HIRE STAFF MEMBER')
+        self.hire_staff_hire_btn.pack()
 
     def __buy_staff(self):
         pass

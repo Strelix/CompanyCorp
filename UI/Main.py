@@ -31,8 +31,8 @@ class Main:
         try:
             for item in items:
                 self.items.append(item)
-        except Exception:
-            return
+        except:
+            pass
 
     def delete_item_list(self) -> None:
         return [item.destroy() for item in self.items]

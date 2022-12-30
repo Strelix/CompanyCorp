@@ -13,11 +13,8 @@ from Classes.Files import Files
 from getpass import getpass
 import sys, os
 
-
 customtkinter.set_default_color_theme('dark-blue')
 customtkinter.set_appearance_mode('dark')
-
-
 
 
 class Window(customtkinter.CTk):
@@ -40,15 +37,10 @@ class Window(customtkinter.CTk):
         self.main = Main.Main(self)
         self.popup = Popup.Popup(self)
 
-        
-
-
-
-
-
     def load_main(self):
         self.topbar.text = customtkinter.CTkLabel(master=self.topbar.top_bar, text='TEST')
         self.topbar.text.pack()
+
 
 if __name__ == "__main__":
     ui = Window()

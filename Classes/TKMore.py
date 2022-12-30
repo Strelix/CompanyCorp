@@ -8,7 +8,8 @@ class TKMore:
         return
 
     def button_purple(self, master, text='BTN') -> object:
-        return customtkinter.CTkButton(master=master, text=text, fg_color='purple', hover_color='medium purple')
+        return customtkinter.CTkButton(master=master,
+                                       text=text, fg_color='purple', hover_color='medium purple')
 
     def container_main(self, master: object, main: object) -> object:
         """
