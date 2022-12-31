@@ -126,7 +126,7 @@ class Company:
                     self.remove_money(price)
 
                     self.save()
-                    return self.staff
+                    return True, f'Successfully hired a {type}.'
                 else:
                     return False, 'You have the maximum number of this staff type!'
             else:

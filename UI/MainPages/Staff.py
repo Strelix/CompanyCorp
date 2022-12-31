@@ -12,6 +12,7 @@ class StaffMain:
         self.MAINSCREEN = main
         self.COMPANYCLASS = self.MAINSCREEN.main_screen.COMPANIES
         self.LOGINCLASS = self.MAINSCREEN.main_screen.LOGIN
+        self.POPUP = self.MAINSCREEN.main_screen.popup
 
         self.container = TkMore.container_main(main.container, self.MAINSCREEN)
         self.container.propagate(False)
@@ -81,5 +82,20 @@ class StaffMain:
         self.hire_staff_hire_btn = TkMore.button_purple(self.container, 'HIRE STAFF MEMBER')
         self.hire_staff_hire_btn.pack()
 
+        self.hire_staff_hire_btn.configure(command=self.__buy_staff)
+
+
+        self.main_screen.add_items_to
+
     def __buy_staff(self):
-        pass
+        staff_to_hire_main = self.select_staff_hire.get()
+        staff_to_hire = staff_to_hire_main.lower()
+        return_message = self.COMPANYCLASS.hire_staff(staff_to_hire)
+        amount = self.COMPANYCLASS.get_staff()[staff_to_hire]
+
+        if return_message[0] == True:
+            self.POPUP.show_popup(f'{return_message[1]} \n You now have {amount} {staff_to_hire_main} staff members.',
+                                  3, 'SUCCESS', 'green')
+        else:
+            print(f'Return msg {return_message[0]}')
+            self.POPUP.show_popup(f'{return_message[1]}', 5, 'ERROR', 'red')

@@ -20,12 +20,20 @@ class Popup:
         self.message = customtkinter.CTkLabel(master=self.container, text = ' ')
         self.message.pack(side=TOP)
 
+        self.afterID = None
 
-    def show_popup(self, message,seconds = 5, announcement_type = 'MESSAGE'):
+    def show_popup(self, message,seconds = 5, announcement_type = 'MESSAGE', border_colour = None):
+        if self.afterID:
+            self.container.after_cancel(self.afterID)
         self.heading.set_text(announcement_type)
         self.message.set_text(message)
         self.container.place(x=(self.main_dimensions[0] * 0.05), y=(self.main_dimensions[
                                                                    1] * 0.1))  # .pack(side = LEFT, padx=15, pady=(0, main.main.container.winfo_screenheight() * 0.7))
 
-        self.container.after((seconds * 1000), lambda: self.container.place_forget())
+        if border_colour:
+            self.container.configure(border_color= border_colour, border_width=2)
+        else:
+            self.container.configure(border_width=0)
+
+        self.afterID = self.container.after((seconds * 1000), lambda: self.container.place_forget())
 

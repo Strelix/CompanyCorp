@@ -67,4 +67,6 @@ class LoginMain:
         self.msg.set_text(login_result[1])
 
         if login_result[0]:
+            self.main_screen.main_screen.popup.show_popup(f'{login_result[1]}', 2, 'SUCCESS',
+                                              'green')
             self.login_button.after(200, lambda: self.main_screen.change_page('profile'))

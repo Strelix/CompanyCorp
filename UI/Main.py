@@ -9,6 +9,41 @@ from UI.MainPages import Settings as Settings
 from UI.MainPages import Staff as Staff
 from customtkinter import LEFT, RIGHT, TOP, BOTTOM
 
+pages = {
+    'default': {
+        "login": None,
+        "admin": False
+    },
+    'login': {
+        "login": None,
+        "admin": False
+    },
+    'profile': {
+        "login": True,
+        "admin": False
+    },
+    'staff': {
+        "login": True,
+        "admin": False
+    },
+    'hack': {
+        "login": True,
+        "admin": False
+    },
+    'settings': {
+        "login": None,
+        "admin": False
+    },
+    'admin_dashboard': {
+        "login": True,
+        "admin": True
+    },
+    'create_account': {
+        "login": False,
+        "admin": False
+    }
+}
+
 
 class Main:
     def __init__(self, main):
@@ -27,7 +62,7 @@ class Main:
                                                       text_font=('FredokaOne', '15', 'bold'))
         self.heading.pack(side=TOP, pady=15)
 
-    def add_items_to_list(self, *items):
+    def add_items_to_list(self, *items) -> None:
         try:
             for item in items:
                 self.items.append(item)
@@ -37,8 +72,28 @@ class Main:
     def delete_item_list(self) -> None:
         return [item.destroy() for item in self.items]
 
-    def change_page(self, page='default', *arguments):
+    def change_page(self, page='default', *arguments) -> None:
         page: str = page.lower()
+
+        try:
+            if pages[page]:
+                pass
+        except:
+            return self.main_screen.popup.show_popup('Sadly we\'ve had an error loading this page.', 2, 'ERROR', 'red')
+        else:
+            if pages[page]:
+                page_details = pages[page]
+                if page_details["login"] == True:
+                    if not self.main_screen.LOGIN.logged_in:
+                        return self.main_screen.popup.show_popup('Please login to go to this page.', 2, 'ERROR', 'red')
+                elif page_details["login"] == False:
+                    if self.main_screen.LOGIN.logged_in:
+                        return self.main_screen.popup.show_popup('You can\'t view this page while logged in.', 2, 'ERROR', 'red')
+
+                if page_details["admin"]:
+                    if not self.main_screen.LOGIN.admin:
+                        return self.main_screen.popup.show_popup('This page is restricted to ADMINS.', 2, 'ERROR',
+                                                                 'red')
 
         self.delete_item_list()
 
